@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Toolbar from './components/Toolbar/Toolbar'
+import Sidebar from './components/SideDrawer/Sidedrawer'
+import Backdrop from './components/Backdrop/Backdrop'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Hello  from './view/welcome'
+import backdrop from './components/Backdrop/Backdrop';
 
-function App() {
+class  App extends Component {
+  state={
+    sideDrawerOpen:false
+  }
+
+  drawerClick=()=>{
+    this.setState((prevState)=>{
+      return {sideDrawerOpen:!prevState.sideDrawerOpen}
+    })
+  }
+  drawerClose=()=>{
+    this.setState(()=>{
+      return {sideDrawerOpen:false}
+    })
+  }
+  render(){
+    // let sideDrawer;
+    let backDrop ;
+    if(this.state.sideDrawerOpen){
+      
+      backDrop=<Backdrop click={this.drawerClose}/>
+    }
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{hight:"100%"}}>
+      {/* <Router>
+        Hello World
+        <Route path="/" component={Hello} />
+      </Router> */}
+      <Toolbar drawerClick={this.drawerClick}/>
+      <Sidebar show={this.state.sideDrawerOpen}/>
+      {backDrop}
+     
+      {/* <main style={{marginTop:"64px"}}> 
+      <p>this is page content</p>
+      
+      </main> */}
+     
     </div>
   );
+}
 }
 
 export default App;
